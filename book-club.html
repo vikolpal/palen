@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book club — Viktor Palenychak</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#F6F1E7;
+  --ink:#173F2B;
+  --ink-soft:#496454;
+  --ink-faint:#7B8A7D;
+  --accent:#730303;
+  --accent-deep:#186B3C;
+  --rule:#D8CEC0;
+}
+
+:root[data-theme="dark"]{
+  --paper:#151E19;
+  --ink:#F1EBDD;
+  --ink-soft:#B8C8BC;
+  --ink-faint:#82958A;
+  --accent:#B84A4A;
+  --accent-deep:#59A078;
+  --rule:#35453B;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#151E19;
+    --ink:#F1EBDD;
+    --ink-soft:#B8C8BC;
+    --ink-faint:#82958A;
+    --accent:#B84A4A;
+    --accent-deep:#59A078;
+    --rule:#35453B;
+  }
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:1.125rem;
+  font-weight:300;
+  line-height:1.72;
+  font-optical-sizing:auto;
+}
+
+.wrap{
+  max-width:38rem;
+  margin:0 auto;
+  padding:0 1.5rem;
+}
+
+.masthead{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem 2rem;
+  align-items:baseline;
+  justify-content:space-between;
+  padding:2.5rem 0 3.5rem;
+}
+
+.mark{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:500;
+  font-size:1.0625rem;
+  text-decoration:none;
+  color:var(--ink);
+}
+
+.masthead nav{
+  display:flex;
+  gap:1.75rem;
+  font-size:1rem;
+}
+
+.masthead nav a{
+  color:var(--ink-soft);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  padding-bottom:2px;
+}
+
+.masthead nav a:hover{
+  color:var(--ink);
+  border-bottom-color:var(--accent);
+}
+
+.masthead nav a[aria-current="page"]{
+  color:var(--ink);
+  border-bottom-color:var(--accent-deep);
+}
+
+h1{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:400;
+  font-size:1.75rem;
+  margin:0 0 .9rem;
+  letter-spacing:-.008em;
+}
+
+.intro{
+  color:var(--ink-soft);
+  margin:0 0 3rem;
+  max-width:32rem;
+}
+
+.seasons{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.season{
+  display:grid;
+  grid-template-columns:7rem 1fr;
+  gap:1.5rem;
+  padding:1.5rem 0;
+  border-top:1px solid var(--rule);
+}
+
+.season:last-child{
+  border-bottom:1px solid var(--rule);
+}
+
+.season-name{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:1.05rem;
+  font-weight:400;
+  color:var(--ink);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+.season-date{
+  color:var(--ink-faint);
+  font-size:.95rem;
+  margin-top:.15rem;
+}
+
+.place{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:1.2rem;
+  font-weight:400;
+  margin:0 0 .25rem;
+}
+
+.book{
+  margin:0;
+  color:var(--ink-soft);
+}
+
+.book em{
+  color:var(--ink);
+}
+
+.coming{
+  color:var(--ink-faint);
+  font-style:italic;
+}
+
+.ask{
+  margin-top:2.75rem;
+  padding-bottom:4rem;
+}
+
+.ask a{
+  display:inline-block;
+  font-family:"Fraunces",serif;
+  font-size:1.0625rem;
+  color:var(--paper);
+  background:var(--accent-deep);
+  text-decoration:none;
+  padding:.7rem 1.6rem;
+  border-radius:2px;
+}
+
+.ask a:hover{
+  background:var(--accent);
+}
+
+.ask .note{
+  font-size:.9375rem;
+  color:var(--ink-faint);
+  margin:.9rem 0 0;
+}
+
+footer{
+  border-top:1px solid var(--rule);
+  padding:2.5rem 0 4rem;
+  font-size:.9375rem;
+  color:var(--ink-faint);
+  text-align:center;
+}
+
+a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+
+@media (max-width:37rem){
+  .masthead{
+    padding-bottom:2.75rem;
+  }
+
+  .masthead nav{
+    gap:1rem 1.25rem;
+  }
+
+  .season{
+    grid-template-columns:1fr;
+    gap:.25rem;
+  }
+
+  .season-name{
+    font-size:.95rem;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{
+    transition:none!important;
+  }
+}
+
+a{
+  transition:
+    color .15s ease,
+    border-color .15s ease,
+    background .15s ease;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <a class="mark" href="index.html">Viktor Palenychak</a>
+
+        <nav>
+      <a href="tutoring.html">Tutoring</a>
+      <a href="book-club.html" aria-current="page">Book club</a>
+      <a href="social.html">Elsewhere</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <h1>Book club</h1>
+
+    <p class="intro">
+      Four books a year, one for each season. Each season we meet in a
+      different place in the world — in person when possible, or online.
+    </p>
+
+    <ul class="seasons">
+
+      <li class="season">
+        <div>
+          <div class="season-name">Spring</div>
+          <div class="season-date">20 March 2027</div>
+        </div>
+
+        <div>
+          <p class="place">Prague</p>
+          <p class="book"><em>Pride and Prejudice</em></p>
+          <p class="book coming">Address is secret.</p>
+        </div>
+      </li>
+
+      <li class="season">
+        <div>
+          <div class="season-name">Summer</div>
+          <div class="season-date">Coming soon</div>
+        </div>
+
+        <div>
+          <p class="place">Coming soon</p>
+          <p class="book coming">
+            The place and book will be announced soon.
+          </p>
+        </div>
+      </li>
+
+      <li class="season">
+        <div>
+          <div class="season-name">Autumn</div>
+          <div class="season-date">Coming soon</div>
+        </div>
+
+        <div>
+          <p class="place">Coming soon</p>
+          <p class="book coming">
+            The place and book will be announced soon.
+          </p>
+        </div>
+      </li>
+
+      <li class="season">
+        <div>
+          <div class="season-name">Winter</div>
+          <div class="season-date">Coming soon</div>
+        </div>
+
+        <div>
+          <p class="place">Coming soon</p>
+          <p class="book coming">
+            The place and book will be announced soon.
+          </p>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="ask">
+      <a href="mailto:hello@example.com">Join the book club</a>
+      <p class="note">
+        Email me if you'd like to take part in the next season.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>Viktor Palenychak · Prague</footer>
+
+</div>
+
+</body>
+</html>

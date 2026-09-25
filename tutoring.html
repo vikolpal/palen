@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutoring — Viktor Palenychak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F1E7;
+  --ink:#173F2B;
+  --ink-soft:#496454;
+  --ink-faint:#7B8A7D;
+  --accent:#730303;
+  --accent-deep:#186B3C;
+  --rule:#D8CEC0;
+  --card:#EDECE1;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --paper:#151E19;
+    --ink:#F1EBDD;
+    --ink-soft:#B8C8BC;
+    --ink-faint:#82958A;
+    --accent:#B84A4A;
+    --accent-deep:#59A078;
+    --rule:#35453B;
+    --card:#212B20;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151E19;
+  --ink:#F1EBDD;
+  --ink-soft:#B8C8BC;
+  --ink-faint:#82958A;
+  --accent:#B84A4A;
+  --accent-deep:#59A078;
+  --rule:#35453B;
+  --card:#212B20;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:1.125rem;
+  font-weight:300;
+  line-height:1.72;
+  font-optical-sizing:auto;
+}
+
+.wrap{max-width:44rem;margin:0 auto;padding:0 1.5rem}
+
+.masthead{
+  display:flex;flex-wrap:wrap;gap:1rem 2rem;align-items:baseline;
+  justify-content:space-between;padding:2.5rem 0 3.5rem;
+}
+.mark{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:1.0625rem;
+  text-decoration:none;color:var(--ink);
+}
+.masthead nav{display:flex;gap:1.5rem;font-size:1rem;flex-wrap:wrap}
+.masthead nav a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px}
+.masthead nav a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+.masthead nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent-deep)}
+
+h1{
+  font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:1.75rem;
+  margin:0 0 1rem;letter-spacing:-.008em;
+}
+h2{
+  font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:1.1875rem;
+  margin:0 0 1.25rem;
+}
+.intro{margin:0 0 2.75rem;color:var(--ink-soft);max-width:34rem}
+
+.subjects{
+  list-style:none;margin:0 0 1.25rem;padding:0;
+  display:grid;gap:1rem;
+  grid-template-columns:1fr;
+}
+@media (min-width:38rem){
+  .subjects{grid-template-columns:1fr 1fr}
+}
+
+.subject{
+  border:1px solid var(--rule);
+  background:var(--card);
+  border-radius:3px;
+  overflow:hidden;
+}
+.subject button{
+  all:unset;
+  display:flex;
+  width:100%;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:1rem;
+  padding:1.15rem 1.35rem;
+  cursor:pointer;
+  box-sizing:border-box;
+}
+.subject button:hover .subj-name{color:var(--accent-deep)}
+.subj-name{
+  font-family:"Fraunces",serif;font-weight:400;font-size:1.1875rem;color:var(--ink);
+}
+.subj-price{
+  font-size:.9375rem;color:var(--ink-faint);white-space:nowrap;
+  font-variant-numeric:oldstyle-nums;
+}
+.subj-panel{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .28s ease;
+}
+.subject[data-open="true"] .subj-panel{max-height:14rem}
+.subj-panel-inner{
+  padding:0 1.35rem 1.35rem;
+  color:var(--ink-soft);
+  font-size:1.0625rem;
+  border-top:1px solid var(--rule);
+  margin-top:0;
+  padding-top:1rem;
+}
+.subject[data-open="false"] .subj-panel-inner{border-top:none;padding-top:0}
+
+.plus{
+  font-family:"Fraunces",serif;font-size:1.25rem;color:var(--ink-faint);
+  line-height:1;transition:transform .2s ease;flex-shrink:0;
+}
+.subject[data-open="true"] .plus{transform:rotate(45deg);color:var(--accent)}
+
+.note{
+  color:var(--ink-faint);font-size:.9375rem;margin:0 0 3.5rem;
+}
+
+.testimonials{list-style:none;margin:0 0 3.5rem;padding:2rem 0 0;border-top:1px solid var(--rule);display:grid;gap:1.5rem}
+.testimonials li{
+  border:1px solid var(--rule);
+  background:var(--card);
+  border-radius:3px;
+  padding:1.35rem 1.5rem;
+}
+.t-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.5rem 1rem;margin-bottom:.6rem}
+.t-name{font-family:"Fraunces",serif;font-weight:500;font-size:1.0625rem;color:var(--ink)}
+.t-subject{font-size:.875rem;color:var(--ink-faint);display:block;margin-top:.1rem}
+.t-meta{display:flex;align-items:center;gap:.6rem;font-size:.875rem;color:var(--ink-faint);white-space:nowrap}
+.t-stars{color:var(--accent);letter-spacing:1px}
+.testimonials blockquote{
+  margin:0;font-style:italic;color:var(--ink-soft);font-size:1.0625rem;line-height:1.65;
+}
+
+.ask{padding-bottom:4rem}
+.ask a{
+  display:inline-block;font-family:"Fraunces",serif;font-size:1.0625rem;
+  color:var(--paper);background:var(--accent-deep);text-decoration:none;
+  padding:.7rem 1.6rem;border-radius:2px;
+}
+.ask a:hover{background:var(--accent)}
+.ask .note2{font-size:.9375rem;color:var(--ink-faint);margin:.9rem 0 0}
+
+footer{
+  border-top:1px solid var(--rule);padding:2.5rem 0 4rem;
+  font-size:.9375rem;color:var(--ink-faint);text-align:center;
+}
+
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+a{transition:color .15s ease,border-color .15s ease,background .15s ease}
+
+/* Booking form */
+.booking { margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px solid var(--rule); }
+.booking h2 { margin-bottom: .55rem; }
+.booking-intro { color: var(--ink-soft); margin: 0 0 1.5rem; max-width: 36rem; }
+.booking form { display: grid; gap: 1rem; }
+.booking label { display: grid; gap: .35rem; }
+.booking label > span { font-size: .88rem; color: var(--ink-soft); }
+.booking em { font-style: normal; color: var(--ink-faint); }
+.booking input, .booking select, .booking textarea {
+  width: 100%; box-sizing: border-box; font: inherit; color: var(--ink);
+  background: transparent; border: 1px solid var(--rule); border-radius: 2px; padding: .7rem .75rem;
+}
+.booking textarea { resize: vertical; min-height: 7rem; }
+.booking input:focus, .booking select:focus, .booking textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.booking .submit { justify-self: start; margin-top: .25rem; border: 0; background: var(--accent); color: #fff; padding: .72rem 1.15rem; font: inherit; cursor: pointer; border-radius: 2px; }
+.booking .submit:hover { background: var(--accent-deep); }
+.form-note { font-size: .84rem; color: var(--ink-faint); margin: -.25rem 0 0; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <a class="mark" href="index.html">Viktor Palenychak</a>
+        <nav>
+      <a href="tutoring.html" aria-current="page">Tutoring</a>
+      <a href="book-club.html">Book club</a>
+      <a href="social.html">Elsewhere</a>
+    </nav>
+  </header>
+
+  <h1>Tutoring</h1>
+  <p class="intro">One-on-one, conversation-led, built around what you're actually trying to understand rather than a fixed syllabus. Tap a subject for details.</p>
+
+  <ul class="subjects" id="subjects">
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">Microeconomics</span>
+        <span class="subj-price">€25/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Consumer and firm behavior, market structure, game theory basics. Problem-set heavy — we work through your actual coursework rather than abstract review.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">Macroeconomics</span>
+        <span class="subj-price">€25/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Growth, inflation, monetary and fiscal policy, open-economy models. Good for connecting the models to what's actually in the news, which is usually where the confusion lives.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">Portfolio management</span>
+        <span class="subj-price">€25/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Asset allocation, risk-adjusted returns, and building a portfolio you can actually explain and defend. Aimed at students and career-switchers preparing for CFA-style material or their first real allocation decisions.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">Mathematics</span>
+        <span class="subj-price">€20/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Calculus, linear algebra, and statistics — usually the math underlying an economics or finance course, taught alongside that course rather than in the abstract.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">Czech language</span>
+        <span class="subj-price">€20/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Conversation-led Czech for people living in or moving to Prague, from basics through the point where you stop translating in your head. Good for anyone who can order coffee but goes quiet in meetings.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">English language</span>
+        <span class="subj-price">€20/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Conversational and academic English, including essay writing and exam preparation. Lessons adjust to whatever you're actually using the language for — work, study, or travel.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">Philosophy</span>
+        <span class="subj-price">€20/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        Close reading of primary texts, argument reconstruction, and essay feedback. Good for exam prep, thesis chapters, or just working through a text that isn't clicking on your own.
+      </div></div>
+    </li>
+    <li class="subject" data-open="false">
+      <button type="button" aria-expanded="false">
+        <span class="subj-name">History of economic thought</span>
+        <span class="subj-price">€20/hr</span>
+        <span class="plus" aria-hidden="true">+</span>
+      </button>
+      <div class="subj-panel"><div class="subj-panel-inner">
+        From classical political economy through Keynes and the neoclassical synthesis to present debates. For understanding why economists disagree, not just what the models say.
+      </div></div>
+    </li>
+</ul>
+
+  <p class="note">Sessions run 60 or 90 minutes, online or in person in Prague. Rates above are for 60 minutes.</p>
+
+  <h2>What students say</h2>
+  <ul class="testimonials">
+    <li>
+      <div class="t-head">
+        <span>
+          <span class="t-name">Oleksandra</span>
+          <span class="t-subject">Economic statistics, university coursework</span>
+        </span>
+        <span class="t-meta"><span class="t-stars">★★★★★</span><span>10 Mar 2025</span></span>
+      </div>
+      <blockquote>Viktor helped with everything I needed — I passed Introduction to Statistics with top marks. Now we're moving on to macroeconomics. Highly recommend.</blockquote>
+    </li>
+    <li>
+      <div class="t-head">
+        <span>
+          <span class="t-name">Alisa</span>
+          <span class="t-subject">Economics, university coursework</span>
+        </span>
+        <span class="t-meta"><span class="t-stars">★★★★★</span><span>22 Jan 2025</span></span>
+      </div>
+      <blockquote>Even the hardest microeconomics topics became simple and logical. We clicked right from the first lesson, and every session feels relaxed but productive. Very happy — recommend him to anyone trying to make sense of economics.</blockquote>
+    </li>
+    <li>
+      <div class="t-head">
+        <span>
+          <span class="t-name">Natalia</span>
+          <span class="t-subject">Czech language, relocating abroad</span>
+        </span>
+        <span class="t-meta"><span class="t-stars">★★★★★</span><span>28 May 2023</span></span>
+      </div>
+      <blockquote>Genuine and easy to talk to — we clicked immediately. After just one month of lessons I could already speak basic Czech.</blockquote>
+    </li>
+    <li>
+      <div class="t-head">
+        <span>
+          <span class="t-name">Denys</span>
+          <span class="t-subject">Czech language, beginner</span>
+        </span>
+        <span class="t-meta"><span class="t-stars">★★★★★</span><span>10 Apr 2023</span></span>
+      </div>
+      <blockquote>Breaks the material down clearly and always adds extra YouTube videos or a podcast to practice with.</blockquote>
+    </li>
+  </ul>
+
+  <section class="booking" id="booking">
+    <h2>Book a session</h2>
+    <p class="booking-intro">Tell me a little about what you need. I’ll read your application and get back to you by email, or contact you on WhatsApp if you prefer.</p>
+
+    <form action="https://formsubmit.co/hello@example.com" method="POST">
+      <input type="hidden" name="_subject" value="New tutoring application — Viktor Palenychak">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://example.com/thank-you.html">
+
+      <label>
+        <span>Name</span>
+        <input type="text" name="name" autocomplete="name" required>
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+
+      <label>
+        <span>WhatsApp / phone <em>(optional)</em></span>
+        <input type="tel" name="phone" autocomplete="tel">
+      </label>
+
+      <label>
+        <span>Subject</span>
+        <select name="subject" required>
+          <option value="" selected disabled>Choose a subject</option>
+          <option>Microeconomics</option>
+          <option>Macroeconomics</option>
+          <option>Portfolio management</option>
+          <option>Mathematics</option>
+          <option>Czech language</option>
+          <option>English language</option>
+          <option>Philosophy</option>
+          <option>History of economic thought</option>
+          <option>Other</option>
+        </select>
+      </label>
+
+      <label>
+        <span>What do you need help with?</span>
+        <textarea name="need" rows="5" placeholder="For example: exam preparation, a specific topic, coursework, conversation practice…" required></textarea>
+      </label>
+
+      <label>
+        <span>Preferred format</span>
+        <select name="format">
+          <option>Online</option>
+          <option>In person in Prague</option>
+          <option>Either</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Preferred contact</span>
+        <select name="contact">
+          <option>Email</option>
+          <option>WhatsApp</option>
+          <option>Either</option>
+        </select>
+      </label>
+
+      <label>
+        <span>When are you usually available? <em>(optional)</em></span>
+        <input type="text" name="availability" placeholder="e.g. weekday evenings">
+      </label>
+
+      <button class="submit" type="submit">Send application</button>
+      <p class="form-note">I’ll review your request and reply personally. The first 30-minute session is free.</p>
+    </form>
+  </section>
+
+  <footer>Viktor Palenychak · Prague</footer>
+</div>
+
+<script>
+document.querySelectorAll('.subject button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var card = btn.closest('.subject');
+    var isOpen = card.getAttribute('data-open') === 'true';
+    card.setAttribute('data-open', String(!isOpen));
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+});
+</script>
+
+</body>
+</html>
